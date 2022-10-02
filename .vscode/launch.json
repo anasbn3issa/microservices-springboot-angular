@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RewardApplication<reward>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "tn.esprit.ms.reward.RewardApplication",
+            "projectName": "reward",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
