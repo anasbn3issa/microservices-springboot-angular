@@ -1,0 +1,12 @@
+version: "2.2"
+services:
+
+  Eureka:
+    container_name: wigglerregistry
+    build: .\eureka
+    ports:
+      - "8761:8761"
+    hostname: wigglerregistry
+    image: "eureka"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/
