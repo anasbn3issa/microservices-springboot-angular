@@ -1,12 +1,69 @@
-version: "2.2"
+version: "3.8"
 services:
-
-  Eureka:
-    container_name: wigglerregistry
+  eureka:
+    hostname: eureka
+    restart: unless-stopped
     build: .\eureka
     ports:
       - "8761:8761"
-    hostname: wigglerregistry
+    networks:
+      - ms-network
+    container_name: eureka
     image: "eureka"
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://eureka:8761/actuator/health"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+        start_period: 20s
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/
+      - eureka.instance.hostname=eureka
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka/
+    
+  redis:
+    image: redis:6.2-alpine
+    command: ["redis-server","--protected-mode", "no","--port","6379"]
+    restart: unless-stopped
+    hostname: redis
+    container_name: redis
+    networks:
+      - ms-network
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_PORT_NUMBER=6379
+    ports:
+      - "6379:6379"
+    healthcheck:
+        test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    volumes: 
+      - cache:/data
+      
+  sterilization:
+    hostname: sterilization
+    container_name: sterilization
+    build: .\sterilization-veterinarian
+    ports:
+      - "8082:8082"
+    networks:
+      - ms-network
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - REDIS_HOST=redis
+      - REDIS_PORT= 6379
+    image: "sterilization"
+    depends_on:
+      redis:
+        condition: service_healthy
+      eureka:
+          condition: service_healthy 
+
+volumes:
+  cache:
+    driver: local
+networks:
+  ms-network:
+    driver: bridge

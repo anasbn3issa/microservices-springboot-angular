@@ -1,7 +1,10 @@
 package com.esprit.microservice;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,7 +29,17 @@ public class SterilizationRestAPI {
 	private SterilizationService sterilizationService;
 
 	
-	
+	@GetMapping
+	@ResponseStatus (HttpStatus.OK)
+    public List<Sterilization> getAllProducts() {
+        return sterilizationService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Sterilization findJob(@PathVariable String id) {
+        return sterilizationService.findJobById(id);
+    }
+    
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Sterilization> createSterilization (@RequestBody Sterilization sterilization) {
@@ -34,14 +47,14 @@ public class SterilizationRestAPI {
 	}
 	
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Sterilization> updateSterilization (@PathVariable (value= "id") int id,
+	public ResponseEntity<Sterilization> updateSterilization (@PathVariable (value= "id") String id,
 	@RequestBody Sterilization sterilization){
 		return new ResponseEntity<>(sterilizationService.updateSterilization(id, sterilization), HttpStatus.OK);
 	}
 	
 	@DeleteMapping (value ="/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus (HttpStatus.OK)
-	public ResponseEntity<String> deleteSterilization (@PathVariable(value="id") int id){
+	public ResponseEntity<String> deleteSterilization (@PathVariable(value="id") String id){
 	return new ResponseEntity<>(sterilizationService.deleteSterilization(id) , HttpStatus.OK);
 	}
 }
