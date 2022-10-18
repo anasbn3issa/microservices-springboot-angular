@@ -1,5 +1,7 @@
 package com.esprit.microservice.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,33 +11,39 @@ import com.esprit.microservice.repositories.SterilizationRepository;
 @Service
 public class SterilizationService {
 	
-	@Autowired
-	private SterilizationRepository sterilizationRepository;
+	@Autowired SterilizationRepository repo;
+	
+	public List<Sterilization> findAll(){
+        return (List<Sterilization>) repo.findAll();
+    }
+
+    public Sterilization findJobById(String id){
+        return repo.findById(id).get();
+    }
+
 	
 	public Sterilization addSterilization (Sterilization Sterilization) {
-		return sterilizationRepository.save(Sterilization);
+		return repo.save(Sterilization);
 	}
 	
-	public Sterilization updateSterilization (int id, Sterilization newSterilization ) {
-		if (sterilizationRepository.findById(id).isPresent()) {
-		Sterilization existingSterilization = sterilizationRepository.findById(id).get();
+	public Sterilization updateSterilization (String id, Sterilization newSterilization ) {
+		if (repo.findById(id).isPresent()) {
+		Sterilization existingSterilization = repo.findById(id).get();
 		existingSterilization.setDate (newSterilization.getDate());
 		existingSterilization.setFee(newSterilization.getFee());
 		existingSterilization.setRemarks(newSterilization.getRemarks());
-		return sterilizationRepository.save(existingSterilization);
+		existingSterilization.setVeterinarian(newSterilization.getVeterinarian());
+		return repo.save(existingSterilization);
 		}else
 			return null;
 	}
 	
-	public String deleteSterilization (int id) {
-		if (sterilizationRepository.findById (id).isPresent()) {
-			sterilizationRepository.deleteById (id);
+	public String deleteSterilization (String id) {
+		if (repo.findById (id).isPresent()) {
+			repo.deleteById (id);
 			return "Sterilization supprimé;";
 		}
 		else
 			return "Sterilization non supprimé";
 	}
-	
-	
-
 }
