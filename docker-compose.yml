@@ -7,6 +7,7 @@ services:
     ports:
       - "8761:8761"
     networks:
+      - vaccination-mysql
       - ms-network
     container_name: eureka
     image: "eureka"
@@ -19,7 +20,38 @@ services:
     environment:
       - eureka.instance.hostname=eureka
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka/
-    
+   
+
+  mysqldb:
+    image: mysql:8
+    networks:
+      - vaccination-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=vaccination
+    healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 20s
+            retries: 10
+
+  vaccination:
+    container_name: vaccination
+    build: .\Vaccination
+    ports:
+      - "8091:8091"
+    hostname: vaccination
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb/vaccination?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+    image: "vaccination"
+    networks:
+      - vaccination-mysql
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+      eureka:
+          condition: service_healthy  
+     
   redis:
     image: redis:6.2-alpine
     command: ["redis-server","--protected-mode", "no","--port","6379"]
@@ -65,5 +97,7 @@ volumes:
   cache:
     driver: local
 networks:
+  vaccination-mysql:
   ms-network:
     driver: bridge
+
