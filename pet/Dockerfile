@@ -6,8 +6,8 @@ ENV PORT=5000
 ENV NODE_ENV=development
 ENV MONGO_URI=mongodb+srv://omarkarboul:HcwMU0wflgPC7obJ@scaleitcluster.uac7x.mongodb.net/Scale-IT-NaN?retryWrites=true&w=majority
 
-COPY package.json .
+COPY . .
 
-RUN npm i && nodemon index.js
+RUN npm i && node index.js
 
 EXPOSE 5000
