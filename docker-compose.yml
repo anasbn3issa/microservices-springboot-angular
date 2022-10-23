@@ -7,7 +7,6 @@ services:
     ports:
       - "8761:8761"
     networks:
-      - local-mysql
       - ms-network
     container_name: eureka
     image: "eureka"
@@ -211,11 +210,11 @@ services:
       sterilization:
         condition: service_healthy
 
-  volumes:
-    cache:
-      driver: local
-  networks:
-    vaccination-mysql:
-    local-mysql:
-    ms-network:
-      driver: bridge
+volumes:
+  cache:
+    driver: local
+networks:
+  vaccination-mysql:
+  local-mysql:
+  ms-network:
+    driver: bridge
