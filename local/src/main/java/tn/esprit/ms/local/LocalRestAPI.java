@@ -24,7 +24,7 @@ public class LocalRestAPI {
     @Autowired
     private LocalService localService;
 
-    // Path : http://localhost:8081/api/locals
+    // Path : http://localhost:8094/api/locals
     @GetMapping
     @ResponseBody
     public List<Local> getLocals() {
@@ -32,7 +32,7 @@ public class LocalRestAPI {
         return listlocals;
     }
 
-    // Path : http://localhost:8081/api/locals/:id
+    // Path : http://localhost:8094/api/locals/:id
     @GetMapping("/{id}")
     @ResponseBody
     public Local getLocal(@PathVariable("id") int id) {
@@ -40,14 +40,14 @@ public class LocalRestAPI {
         return local;
     }
 
-    // Path : http://localhost:8081/api/locals
+    // Path : http://localhost:8094/api/locals
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Local> createCandidat(@RequestBody Local local) {
         return new ResponseEntity<>(localService.addLocal(local), HttpStatus.OK);
     }
 
-    // Path : http://localhost:8081/api/locals/update/:id
+    // Path : http://localhost:8094/api/locals/update/:id
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Local> updateLocal(@PathVariable(value = "id") int id,
@@ -55,7 +55,7 @@ public class LocalRestAPI {
         return new ResponseEntity<>(localService.updateLocal(id, candidat), HttpStatus.OK);
     }
 
-    // Path : http://localhost:8081/api/locals/delete/:id
+    // Path : http://localhost:8094/api/locals/delete/:id
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> deleteLocal(@PathVariable(value = "id") int id) {
