@@ -44,8 +44,15 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb/vaccination?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
     image: "vaccination"
+    healthcheck:
+      test: curl --fail http://vaccination:8091 || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 15s
+      timeout: 10s
     networks:
       - vaccination-mysql
+      - ms-network
     depends_on:
       mysqldb:
         condition: service_healthy
@@ -87,12 +94,35 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT= 6379
     image: "sterilization"
+    healthcheck:
+      test: curl --fail http://sterilization:8082 || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 15s
+      timeout: 10s
     depends_on:
       redis:
         condition: service_healthy
       eureka:
           condition: service_healthy 
 
+  gateway:
+    hostname: gateway
+    container_name: gateway
+    build: .\APIGateway-3
+    ports:
+      - "8888:8888"
+    networks:
+      - ms-network
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - SPRING_PROFILES_ACTIVE=test
+    image: "gateway"
+    depends_on:
+      vaccination:
+        condition: service_healthy
+      sterilization:
+          condition: service_healthy
 volumes:
   cache:
     driver: local
