@@ -44,8 +44,15 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb/vaccination?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
     image: "vaccination"
+    healthcheck:
+      test: curl --fail http://vaccination:8091 || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 15s
+      timeout: 10s
     networks:
       - vaccination-mysql
+      - ms-network
     depends_on:
       mysqldb:
         condition: service_healthy
@@ -74,6 +81,52 @@ services:
     volumes: 
       - cache:/data
       
+  postgres:
+    image: postgres:13.2
+    restart: unless-stopped
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-network
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=rewards
+      - PGDATA=/data/postgres
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+  
+  reward:
+    hostname: reward
+    build: ./reward
+    ports:
+      - "8085:8085"
+    networks:
+      - ms-network
+    container_name: reward
+    image: "reward"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka:
+          condition: service_healthy 
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://reward:8085/actuator/health"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+        start_period: 20s
+    environment:
+      - eureka.client.server-url.default-zone=http://eureka:8761/eureka
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/rewards
+      - spring.datasource.username=postgres
+      - spring.datasource.password=postgres
+      
   sterilization:
     hostname: sterilization
     container_name: sterilization
@@ -87,12 +140,35 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT= 6379
     image: "sterilization"
+    healthcheck:
+      test: curl --fail http://sterilization:8082 || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 15s
+      timeout: 10s
     depends_on:
       redis:
         condition: service_healthy
       eureka:
           condition: service_healthy 
 
+  gateway:
+    hostname: gateway
+    container_name: gateway
+    build: .\APIGateway-3
+    ports:
+      - "8888:8888"
+    networks:
+      - ms-network
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - SPRING_PROFILES_ACTIVE=test
+    image: "gateway"
+    depends_on:
+      vaccination:
+        condition: service_healthy
+      sterilization:
+          condition: service_healthy
 volumes:
   cache:
     driver: local
@@ -100,4 +176,3 @@ networks:
   vaccination-mysql:
   ms-network:
     driver: bridge
-
