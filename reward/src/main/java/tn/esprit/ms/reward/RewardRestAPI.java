@@ -26,5 +26,11 @@ public class RewardRestAPI {
     public void deleteReward(@PathVariable int id) {
         rewardRepository.deleteById(id);
     }
+
+    @RequestMapping("/update/{id}")
+    public Reward updateReward(@PathVariable int id, @RequestBody Reward reward) {
+        reward.setId(id);
+        return rewardRepository.save(reward);
+    }
     
 }
