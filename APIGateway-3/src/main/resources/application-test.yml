@@ -17,6 +17,6 @@ spring:
         - id: sterilizationMs
           uri: http://sterilization:8082/
           predicates:
-            - Path=/**
+            - Path=/api/**
 server:
   port: "8888"
