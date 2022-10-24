@@ -25,7 +25,6 @@ services:
     environment:
       - eureka.instance.hostname=eureka
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka/
-      # - BUILDKIT_PROGRESS=plain
 
    
    
@@ -37,7 +36,6 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_PASSWORD=root
       - MYSQL_DATABASE=locals
-      # - BUILDKIT_PROGRESS=plain
     healthcheck:
             test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
             timeout: 20s
@@ -53,7 +51,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=root
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb-local/locals?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka      
-      # - BUILDKIT_PROGRESS=plain
     image: "local"
     networks:
       - local-mysql
