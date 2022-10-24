@@ -25,6 +25,7 @@ services:
     environment:
       - eureka.instance.hostname=eureka
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka/
+
    
    
   mysqldb-local:
@@ -49,7 +50,7 @@ services:
     environment:
       - SPRING_DATASOURCE_PASSWORD=root
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb-local/locals?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka      
     image: "local"
     networks:
       - local-mysql
@@ -65,6 +66,7 @@ services:
         condition: service_healthy
       eureka:
           condition: service_healthy  
+
              
 
   mysqldb:
