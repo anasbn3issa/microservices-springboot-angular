@@ -22,6 +22,12 @@ spring:
           uri: http://localhost:8094/
           predicates:
             - Path=/locals/**
+  security:
+    user:
+      name: root
+      password: root
+
+        
 
 server:
   port: "8888"

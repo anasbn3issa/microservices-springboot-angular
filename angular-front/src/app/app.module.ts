@@ -14,6 +14,8 @@ import { SecteurActiviteComponent } from './secteur-activite/secteur-activite.co
 import { OperateurComponent } from './operateur/operateur.component';
 import { FactureComponent } from './facture/facture.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { VaccineComponent } from './vaccine/vaccine.component';
+import { TypevaccineComponent } from './typevaccine/typevaccine.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     SecteurActiviteComponent,
     OperateurComponent,
     FactureComponent,
-    NavbarComponent
+    NavbarComponent,
+    VaccineComponent,
+    TypevaccineComponent
   ],
   imports: [
     BrowserModule,
