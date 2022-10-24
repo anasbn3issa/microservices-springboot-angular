@@ -10,14 +10,21 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: petMS
-        uri: http://pet:5000/
+      - id: sterilization-service
+        uri: lb://sterilization-service
+        order: 1
         predicates:
-          - Path=/**
-      - id: vaccinationMs
-        uri: http://vaccination:8091/
+          - Path=/sterilizations/**
+      - id: vaccination-service
+        uri: lb://vaccination-service
+        order: 0
         predicates:
-          - Path=/**
+          - Path=/vaccines/**,/vaccineTypes/**
+      - id: pet
+        uri: lb://pets
+        order: 2
+        predicates:
+          - Path=/pets/**
 
 server:
   port: "8888"
