@@ -10,17 +10,25 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: vaccinationMs
-          uri: http://vaccination:8091/
+        - id: sterilization-service
+          uri: lb://sterilization-service
+          order: 1
           predicates:
-            - Path=/**
-        - id: sterilizationMs
-          uri: http://sterilization:8082/
+            - Path=/sterilizations/**
+        - id: vaccination-service
+          uri: lb://vaccination-service
+          order: 0
           predicates:
-            - Path=/**
-        - id: localMs
-          uri: http://local:8094/
+            - Path=/vaccines/**,/vaccineTypes/**
+        - id: pet
+          uri: lb://pets
+          order: 2
           predicates:
-            - Path=/**
+            - Path=/pets/**
+        - id: local-service
+          uri: lb://local-service
+          order: 3
+          predicates:
+            - Path=/locals/**
 server:
   port: "8888"
