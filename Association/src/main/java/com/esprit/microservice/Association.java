@@ -1,11 +1,9 @@
-package tn.esprit.microservices;
+package com.esprit.microservice;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 
 @Entity
 public class Association implements Serializable{
@@ -54,8 +52,5 @@ public class Association implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
-	
-	
+
 }

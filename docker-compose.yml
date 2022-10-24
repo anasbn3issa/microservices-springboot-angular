@@ -1,5 +1,6 @@
 version: "3.8"
 services:
+
   eureka:
     hostname: eureka
     restart: unless-stopped
@@ -12,92 +13,68 @@ services:
     container_name: eureka
     image: "eureka"
     healthcheck:
-        test: ["CMD", "curl", "-f", "http://eureka:8761/actuator/health"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-        start_period: 20s
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://eureka:8761/actuator/health"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     environment:
       - eureka.instance.hostname=eureka
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka/
-   
 
-  mysqldb:
+  mysqldb-association:
     image: mysql:8
     networks:
-      - vaccination-mysql
+      - association-mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=vaccination
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=associationservice
     healthcheck:
-            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-            timeout: 20s
-            retries: 10
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 5
+            
 
-  vaccination:
-    container_name: vaccination
-    build: .\Vaccination
+  association:
+    container_name: association
+    build: .\Association
     ports:
-      - "8091:8091"
-    hostname: vaccination
+      - "8087:8087"
+    hostname: association
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb/vaccination?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb-association/associationservice?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
-    image: "vaccination"
-    networks:
-      - vaccination-mysql
-    depends_on:
-      mysqldb:
-        condition: service_healthy
-      eureka:
-          condition: service_healthy  
-     
-  redis:
-    image: redis:6.2-alpine
-    command: ["redis-server","--protected-mode", "no","--port","6379"]
-    restart: unless-stopped
-    hostname: redis
-    container_name: redis
-    networks:
-      - ms-network
-    environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
-      - REDIS_PORT_NUMBER=6379
-    ports:
-      - "6379:6379"
+    image: "association"
     healthcheck:
-        test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
-        interval: 30s
-        timeout: 10s
-        retries: 5
-    volumes: 
-      - cache:/data
-      
-  sterilization:
-    hostname: sterilization
-    container_name: sterilization
-    build: .\sterilization-veterinarian
-    ports:
-      - "8082:8082"
+      test: curl --fail http://association:8087 || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 15s
+      timeout: 10s
     networks:
-      - ms-network
-    environment:
-      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
-      - REDIS_HOST=redis
-      - REDIS_PORT= 6379
-    image: "sterilization"
+      - association-mysql
+    restart: on-failure
     depends_on:
-      redis:
+      mysqldb-association:
         condition: service_healthy
       eureka:
-          condition: service_healthy 
+        condition: service_healthy
+
 
 volumes:
   cache:
     driver: local
 networks:
   vaccination-mysql:
+  association-mysql:
   ms-network:
     driver: bridge
 
