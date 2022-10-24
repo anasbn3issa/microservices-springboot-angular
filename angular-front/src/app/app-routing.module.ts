@@ -6,20 +6,23 @@ import { ReglementComponent } from './reglement/reglement.component';
 import { SecteurActiviteComponent } from './secteur-activite/secteur-activite.component';
 import { OperateurComponent } from './operateur/operateur.component';
 import { FactureComponent } from './facture/facture.component';
+import { VaccineComponent } from './vaccine/vaccine.component';
+import { TypevaccineComponent } from './typevaccine/typevaccine.component';
 
-
-const routes: Routes =[
-  { path: 'secteurActivite',  component: SecteurActiviteComponent },
-  { path: 'operateur',  component: OperateurComponent },
-  { path: 'facture',  component: FactureComponent },
-  { path: 'product',  component: ProductsComponent },
-  { path: 'stock',  component: StockComponent },
-  { path: 'reglement',  component: ReglementComponent },
-  {path: '', redirectTo: 'product', pathMatch: 'full'}
-]
+const routes: Routes = [
+  { path: 'secteurActivite', component: SecteurActiviteComponent },
+  { path: 'operateur', component: OperateurComponent },
+  { path: 'facture', component: FactureComponent },
+  { path: 'product', component: ProductsComponent },
+  { path: 'stock', component: StockComponent },
+  { path: 'reglement', component: ReglementComponent },
+  { path: 'vaccine', component: VaccineComponent },
+  { path: 'typevaccine', component: TypevaccineComponent },
+  { path: '', redirectTo: 'product', pathMatch: 'full' },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
