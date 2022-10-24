@@ -14,6 +14,20 @@ spring:
           uri: http://localhost:8091/
           predicates:
             - Path=/**
+        - id: petMS
+          uri: http://localhost:5000/
+          predicates:
+            - Path=/**
+        - id: localMS
+          uri: http://localhost:8094/
+          predicates:
+            - Path=/locals/**
+  security:
+    user:
+      name: root
+      password: root
+
+        
 
 server:
   port: "8888"

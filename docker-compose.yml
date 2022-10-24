@@ -7,20 +7,67 @@ services:
     ports:
       - "8761:8761"
     networks:
-      - vaccination-mysql
       - ms-network
     container_name: eureka
     image: "eureka"
     healthcheck:
-        test: ["CMD", "curl", "-f", "http://eureka:8761/actuator/health"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-        start_period: 20s
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://eureka:8761/actuator/health"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     environment:
       - eureka.instance.hostname=eureka
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka/
+
    
+   
+  mysqldb-local:
+    image: mysql:8
+    networks:
+      - local-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=locals
+    healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 20s
+            retries: 10
+
+  local:
+    container_name: local
+    build: .\Local
+    ports:
+      - "8094:8094"
+    hostname: local
+    environment:
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb-local/locals?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka      
+    image: "local"
+    networks:
+      - local-mysql
+      - ms-network
+    healthcheck:
+      test: curl --fail http://local:8094 || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 15s
+      timeout: 10s
+    depends_on:
+      mysqldb-local:
+        condition: service_healthy
+      eureka:
+          condition: service_healthy  
+
+             
 
   mysqldb:
     image: mysql:8
@@ -30,9 +77,9 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=vaccination
     healthcheck:
-            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-            timeout: 20s
-            retries: 10
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
 
   vaccination:
     container_name: vaccination
@@ -57,11 +104,18 @@ services:
       mysqldb:
         condition: service_healthy
       eureka:
-          condition: service_healthy  
-     
+        condition: service_healthy
+
   redis:
     image: redis:6.2-alpine
-    command: ["redis-server","--protected-mode", "no","--port","6379"]
+    command:
+      [
+        "redis-server",
+        "--protected-mode",
+        "no",
+        "--port",
+        "6379"
+      ]
     restart: unless-stopped
     hostname: redis
     container_name: redis
@@ -74,13 +128,13 @@ services:
     ports:
       - "6379:6379"
     healthcheck:
-        test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
-        interval: 30s
-        timeout: 10s
-        retries: 5
-    volumes: 
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
       - cache:/data
-      
+
   postgres:
     image: postgres:13.2
     restart: unless-stopped
@@ -95,12 +149,12 @@ services:
       - POSTGRES_DB=rewards
       - PGDATA=/data/postgres
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 20s
-  
+
   reward:
     hostname: reward
     build: ./reward
@@ -114,19 +168,25 @@ services:
       postgres:
         condition: service_healthy
       eureka:
-          condition: service_healthy 
+        condition: service_healthy
     healthcheck:
-        test: ["CMD", "curl", "-f", "http://reward:8085/actuator/health"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-        start_period: 20s
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://reward:8085/actuator/health"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     environment:
       - eureka.client.server-url.default-zone=http://eureka:8761/eureka
       - spring.datasource.url=jdbc:postgresql://postgres:5432/rewards
       - spring.datasource.username=postgres
       - spring.datasource.password=postgres
-      
+
   sterilization:
     hostname: sterilization
     container_name: sterilization
@@ -150,11 +210,12 @@ services:
       redis:
         condition: service_healthy
       eureka:
-          condition: service_healthy 
+        condition: service_healthy
 
   gateway:
     hostname: gateway
     container_name: gateway
+    restart: on-failure
     build: .\APIGateway-3
     ports:
       - "8888:8888"
@@ -165,14 +226,32 @@ services:
       - SPRING_PROFILES_ACTIVE=test
     image: "gateway"
     depends_on:
+      local:
+        condition: service_healthy
       vaccination:
         condition: service_healthy
       sterilization:
           condition: service_healthy
+
+  pet:
+    build: .\pet
+    hostname: pet
+    image: "pet"
+    ports:
+      - "5000:5000"
+    stdin_open: true
+    tty: true
+    networks:
+      - ms-network
+    depends_on:
+      eureka:
+        condition: service_healthy
+        
 volumes:
   cache:
     driver: local
 networks:
   vaccination-mysql:
+  local-mysql:
   ms-network:
     driver: bridge

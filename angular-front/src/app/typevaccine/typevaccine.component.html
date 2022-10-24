@@ -1,0 +1,159 @@
+<div class="row">
+  <div class="col-md-11" style="margin-left: 20px">
+    <h3 style="margin-top: 20px">List Type Vaccines</h3>
+    <hr />
+    <button
+      class="btn btn-round btn-sm btn-success"
+      (click)="open(mymodal1, null, null)"
+    >
+      Add new type vaccines
+    </button>
+    <br /><br />
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Duration</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of listTVaccines; let indexOfelement = index">
+          <td>{{ p.type }}</td>
+          <td>{{ p.duration }}</td>
+          <td>
+            <button
+              (click)="deleteVaccine(indexOfelement)"
+              class="btn btn-danger"
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="open(mymodal2, p, indexOfelement)"
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<ng-template #mymodal1 let-modal1>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add new Type Vaccine</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal1.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="mr">Type</label>
+        <div class="input-group">
+          <input
+            id="mr"
+            class="form-control"
+            type="text"
+            placeholder="Vaccine Type"
+            [(ngModel)]="tvaccine.type"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cdate">Duration</label>
+        <div class="input-group">
+          <input
+            id="cdate"
+            class="form-control"
+            type="number"
+            placeholder="Type Vaccine duration in days"
+            [(ngModel)]="tvaccine.duration"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="addVaccine(tvaccine)"
+      (click)="modal1.close('Save click')"
+    >
+      Add
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal1.close('Save click')"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
+<ng-template #mymodal2 let-modal2>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Type Vaccine</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal2.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="mr">type</label>
+        <div class="input-group">
+          <input
+            id="mr"
+            class="form-control"
+            type="text"
+            placeholder="Vaccine Type"
+            [(ngModel)]="tvaccine.type"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cdate">Duration</label>
+        <div class="input-group">
+          <input
+            id="cdate"
+            class="form-control"
+            type="number"
+            placeholder="Type Vaccine Duration in days"
+            [(ngModel)]="tvaccine.duration"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="updateVaccine(tvaccine)"
+      (click)="modal2.close('Save click')"
+    >
+      Edit
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal2.close('Save click')"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
