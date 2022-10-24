@@ -18,7 +18,10 @@ spring:
           uri: http://localhost:5000/
           predicates:
             - Path=/**
-        
+  security:
+    user:
+      name: root
+      password: root
 
 server:
   port: "8888"
