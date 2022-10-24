@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-app.use("/api/pets", require("./src/routes/pet"));
+app.use("/pets", require("./src/routes/pet"));
 
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

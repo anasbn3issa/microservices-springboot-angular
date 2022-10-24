@@ -19,12 +19,12 @@ public class SterilizationMsApplication {
 		SpringApplication.run(SterilizationMsApplication.class, args);
 	}
 	
+	
 	@Bean
 	ApplicationRunner init (SterilizationRepository repository) {
 		return args -> {
-			repository.save(new Sterilization(new Date(), "remarks1", 11.2 , "veto")) ;
-			repository.save(new Sterilization(new Date(), "remarks2", 11.2 , "veto")) ;
-			repository.save(new Sterilization(new Date(), "remarks3", 11.2 , "veto")) ;
+			repository.save(new Sterilization("635707ef355d61f07785ce3c", new Date(), "remarks1", 11.2 , "635707ef355d61f07785ce3c")) ;
+
 
 		};
 	}
