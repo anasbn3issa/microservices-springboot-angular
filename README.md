@@ -8,13 +8,17 @@ In this repository we are using microservices using spring & nodejs to build a w
 We used spring security for the authetification and authorization of the users and we used JWT for the authetification and authorization of the microservices.
 ## Getting Started
 
-1. Install dependecies 
+1. Build, (re)create, start, and attache to containers for a service. 
 ```sh
   docker compose up
   ```
-2. And run the server
+2. Install front dependecies 
+```sh
+  cd angular-front && yarn install
+  ```
+4. And run the front server
   ```sh
-  nodemon server.js
+  yarn run start
   ```
 
 ## DOCUMENTATION
