@@ -18,6 +18,7 @@ import { VaccineComponent } from './vaccine/vaccine.component';
 import { TypevaccineComponent } from './typevaccine/typevaccine.component';
 import { SterilizationComponent } from './sterilization/sterilization.component';
 import { VeterinarianComponent } from './veterinarian/veterinarian.component';
+import { RewardComponent } from './reward/reward.component';
 
 @NgModule({
   declarations: [
@@ -31,8 +32,12 @@ import { VeterinarianComponent } from './veterinarian/veterinarian.component';
     NavbarComponent,
     VaccineComponent,
     TypevaccineComponent,
+<<<<<<< HEAD
     SterilizationComponent,
     VeterinarianComponent
+=======
+    RewardComponent
+>>>>>>> 75d8cf2cdc164ac2aabfe82d905e70a816ee1448
   ],
   imports: [
     BrowserModule,

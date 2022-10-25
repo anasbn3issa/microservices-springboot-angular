@@ -3,7 +3,7 @@ services:
   eureka:
     hostname: eureka
     restart: unless-stopped
-    build: .\eureka
+    build: ./eureka
     ports:
       - "8761:8761"
     networks:
@@ -43,7 +43,7 @@ services:
 
   local:
     container_name: local
-    build: .\Local
+    build: ./Local
     ports:
       - "8094:8094"
     hostname: local
@@ -190,7 +190,7 @@ services:
   sterilization:
     hostname: sterilization
     container_name: sterilization
-    build: .\sterilization-veterinarian
+    build: ./sterilization-veterinarian
     ports:
       - "8082:8082"
     networks:
@@ -218,7 +218,7 @@ services:
     hostname: gateway
     container_name: gateway
     restart: on-failure
-    build: .\APIGateway-3
+    build: ./APIGateway-3
     ports:
       - "8888:8888"
     networks:
@@ -236,7 +236,7 @@ services:
           condition: service_healthy
 
   pet:
-    build: .\pet
+    build: ./pet
     hostname: pet
     image: "pet"
     ports:

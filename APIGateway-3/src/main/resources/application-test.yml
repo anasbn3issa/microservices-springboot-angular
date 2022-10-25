@@ -30,5 +30,10 @@ spring:
           order: 3
           predicates:
             - Path=/locals/**
+        - id: reward-service
+          uri: lb://reward-service
+          order: 4
+          predicates:
+            - Path=/rewards/**
 server:
   port: "8888"

@@ -10,6 +10,7 @@ import { VaccineComponent } from './vaccine/vaccine.component';
 import { TypevaccineComponent } from './typevaccine/typevaccine.component';
 import { SterilizationComponent } from './sterilization/sterilization.component';
 import { VeterinarianComponent } from './veterinarian/veterinarian.component';
+import { RewardComponent } from './reward/reward.component';
 
 const routes: Routes = [
   { path: 'secteurActivite', component: SecteurActiviteComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'typevaccine', component: TypevaccineComponent },
   { path: 'sterilization', component: SterilizationComponent },
   { path: 'veterinarian', component: VeterinarianComponent },
+  { path: 'reward', component: RewardComponent },
   { path: '', redirectTo: 'product', pathMatch: 'full' },
 ];
 
