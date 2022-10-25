@@ -9,6 +9,14 @@ spring:
     name: API-Gateway3
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
       routes:
         - id: sterilization-service
           uri: lb://sterilization-service
@@ -30,5 +38,10 @@ spring:
           order: 3
           predicates:
             - Path=/locals/**
+        - id: reward-service
+          uri: lb://reward-service
+          order: 4
+          predicates:
+            - Path=/rewards/**
 server:
   port: "8888"

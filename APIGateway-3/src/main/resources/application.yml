@@ -9,6 +9,14 @@ spring:
     name: API-Gateway3
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
       routes:
         - id: vaccinationMs
           uri: http://localhost:8091/
@@ -22,12 +30,14 @@ spring:
           uri: http://localhost:8094/
           predicates:
             - Path=/locals/**
+        - id: rewardMS
+          uri: http://localhost:8085/
+          predicates:
+            - Path=/rewards/**
   security:
     user:
       name: root
       password: root
-
-        
 
 server:
   port: "8888"

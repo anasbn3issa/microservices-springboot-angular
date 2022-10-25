@@ -5,7 +5,11 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductsComponent } from './products/products.component';
 import { FormsModule } from '@angular/forms';
-import { NgbModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbModal,
+  NgbModalModule,
+  NgbModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { StockComponent } from './stock/stock.component';
@@ -14,6 +18,7 @@ import { SecteurActiviteComponent } from './secteur-activite/secteur-activite.co
 import { OperateurComponent } from './operateur/operateur.component';
 import { FactureComponent } from './facture/facture.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LocalComponent } from './local/local.component';
 import { VaccineComponent } from './vaccine/vaccine.component';
 import { TypevaccineComponent } from './typevaccine/typevaccine.component';
 
@@ -27,8 +32,9 @@ import { TypevaccineComponent } from './typevaccine/typevaccine.component';
     OperateurComponent,
     FactureComponent,
     NavbarComponent,
+    LocalComponent,
     VaccineComponent,
-    TypevaccineComponent
+    TypevaccineComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,9 +43,9 @@ import { TypevaccineComponent } from './typevaccine/typevaccine.component';
     FormsModule,
     NgbModalModule,
     RouterModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
