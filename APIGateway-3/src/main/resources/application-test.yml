@@ -9,20 +9,12 @@ spring:
     name: API-Gateway3
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          "[/**]":
-            allowedOrigins: "http://localhost:4200"
-            allowedHeaders: "*"
-            allowedMethods:
-              - GET
-              - POST
       routes:
         - id: sterilization-service
           uri: lb://sterilization-service
           order: 1
           predicates:
-            - Path=/sterilizations/**
+            - Path=/sterilizations/**,/veterinarians/**
         - id: vaccination-service
           uri: lb://vaccination-service
           order: 0

@@ -20,22 +20,27 @@ public class Sterilization implements Serializable{
 	private static final long serialVersionUID = 6;
 	@Id
 	private String id;
+	
+	private @NonNull  String petId;
 	private @NonNull Date date;
 	private @NonNull String remarks;
 	private @NonNull Double fee;
+	private Pet pet;
+	private Veterinarian veterinarian;
 	
 	//FK
-    private @NonNull String veterinarian;
+    private @NonNull String veterinarianId;
 	
 	
 
 	
-	public Sterilization(Date date, String remarks, Double fee, String veterinarian) {
+	public Sterilization(String petId, Date date, String remarks, Double fee, String veterinarianId) {
 		super();
+		this.petId = petId;
 		this.date = date;
 		this.remarks = remarks;
 		this.fee = fee;
-		this.veterinarian = veterinarian;
+		this.veterinarianId = veterinarianId;
 	}
 	
 	

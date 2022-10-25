@@ -182,7 +182,7 @@ services:
       retries: 5
       start_period: 20s
     environment:
-      - eureka.client.server-url.default-zone=http://eureka:8761/eureka
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
       - spring.datasource.url=jdbc:postgresql://postgres:5432/rewards
       - spring.datasource.username=postgres
       - spring.datasource.password=postgres
@@ -199,6 +199,8 @@ services:
       - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
       - REDIS_HOST=redis
       - REDIS_PORT= 6379
+      - petMS.base = http://gateway:8888/pets
+      - vetoMS.base = http://gateway:8888/veterinarians
     image: "sterilization"
     healthcheck:
       test: curl --fail http://sterilization:8082 || exit 1

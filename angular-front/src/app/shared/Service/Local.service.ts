@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LocalService {
-  readonly API_URL = 'http://localhost:8094/locals';
-  // readonly API_URL = 'http://localhost:8888/locals';
+  // readonly API_URL = 'http://localhost:8094/locals';
+  readonly API_URL = 'http://localhost:8888/locals';
   constructor(private httpClient: HttpClient) {}
 
   getAllLocals() {

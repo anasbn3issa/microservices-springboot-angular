@@ -21,6 +21,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LocalComponent } from './local/local.component';
 import { VaccineComponent } from './vaccine/vaccine.component';
 import { TypevaccineComponent } from './typevaccine/typevaccine.component';
+import { SterilizationComponent } from './sterilization/sterilization.component';
+import { VeterinarianComponent } from './veterinarian/veterinarian.component';
 import { RewardComponent } from './reward/reward.component';
 
 @NgModule({
@@ -36,6 +38,8 @@ import { RewardComponent } from './reward/reward.component';
     LocalComponent,
     VaccineComponent,
     TypevaccineComponent,
+    SterilizationComponent,
+    VeterinarianComponent,
     RewardComponent,
   ],
   imports: [

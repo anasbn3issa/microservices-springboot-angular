@@ -1,0 +1,225 @@
+<div class="row">
+  <div class="col-md-11" style="margin-left: 20px">
+    <h3 style="margin-top: 20px">List Veterinarians</h3>
+    <hr />
+    <button
+      class="btn btn-round btn-sm btn-success"
+      (click)="open(mymodal1, null, null)"
+    >
+      Add new Veterinarian
+    </button>
+    <br /><br />
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Phone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of veterinarians; let indexOfelement = index">
+          <td>{{ p.name }}</td>
+          <td>{{ p.address }}</td>
+          <td>{{ p.email }}</td>
+          <td>{{ p.phone }}</td>
+          <td>
+            <button
+              (click)="deleteVaccine(p.id)"
+              class="btn btn-danger"
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="open(mymodal2, p, indexOfelement)"
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<ng-template #mymodal1 let-modal1>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add new Veterinarian</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal1.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      
+      <div class="mb-3">
+        <label for="cdate">Name</label>
+        <div class="input-group">
+          <input
+            id="cdate"
+            class="form-control"
+            type="text"
+            step="0.1"
+            placeholder="veterinarian Name"
+            [(ngModel)]="veterinarian.name"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cdate">Address</label>
+        <div class="input-group">
+          <input
+            id="cdate"
+            class="form-control"
+            type="text"
+            step="0.1"
+            placeholder="veterinarian Address"
+            [(ngModel)]="veterinarian.address"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cdate">Email</label>
+        <div class="input-group">
+          <input
+            id="cdate"
+            class="form-control"
+            type="email"
+            step="0.1"
+            placeholder="veterinarian Email"
+            [(ngModel)]="veterinarian.email"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cdate">Phone</label>
+        <div class="input-group">
+          <input
+            id="cdate"
+            class="form-control"
+            type="number"
+            step="0.1"
+            placeholder="veterinarian Phone"
+            [(ngModel)]="veterinarian.phone"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="addVaccine(veterinarian)"
+      (click)="modal1.close('Save click')"
+    >
+      Add
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal1.close('Save click')"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #mymodal2 let-modal2>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Veterinarians</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal2.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="mr">Name</label>
+        <div class="input-group">
+          <input
+            id="mr"
+            class="form-control"
+            type="text"
+            placeholder="veterinarian Name"
+            
+            [(ngModel)]="veterinarian.name"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="mr">Address</label>
+        <div class="input-group">
+          <input
+            id="mr"
+            class="form-control"
+            type="text"
+            placeholder="veterinarian Address"
+            
+            [(ngModel)]="veterinarian.address"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="mr">Email</label>
+        <div class="input-group">
+          <input
+            id="mr"
+            class="form-control"
+            type="text"
+            placeholder="veterinarian Email"
+            
+            [(ngModel)]="veterinarian.email"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="mr">Phone</label>
+        <div class="input-group">
+          <input
+            id="mr"
+            class="form-control"
+            type="text"
+            placeholder="veterinarian Phone"
+            
+            [(ngModel)]="veterinarian.phone"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="updateVaccine(veterinarian)"
+      (click)="modal2.close('Save click')"
+    >
+      Edit
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal2.close('Save click')"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
