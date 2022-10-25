@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-11" style="margin-left: 20px">
-    <h3 style="margin-top: 20px">List Facture</h3>
+    <h3 style="margin-top: 20px">List Locals</h3>
     <hr />
     <button
       class="btn btn-round btn-sm btn-success"
@@ -81,23 +81,18 @@
           />
         </div>
       </div>
-      <!-- <div class="mb-3">
-        <select [value]="local.address">
-          <option [value]="true">true</option>
-          <option [value]="false">false</option>
-        </select>
-      </div> -->
       <div class="mb-3">
-        <label for="cdate">Status</label>
         <div class="input-group">
           <input
-            id="cdate"
-            class="form-control"
-            type="number"
+            class="form-check-input"
+            type="checkbox"
+            id="status"
             placeholder="Local Status"
             [(ngModel)]="local.status"
             [ngModelOptions]="{ standalone: true }"
+            [checked]="local.status"
           />
+          <label class="form-check-label" for="status"> Status </label>
         </div>
       </div>
     </form>
@@ -152,29 +147,25 @@
             id="val"
             class="form-control"
             type="text"
-            placeholder="Local Address(true/false)"
+            placeholder="Local Address"
             [(ngModel)]="local.address"
             [ngModelOptions]="{ standalone: true }"
           />
         </div>
       </div>
-      <!-- <div class="mb-3">
-        <select [value]="local.address">
-          <option [value]="true">true</option>
-          <option [value]="false">false</option>
-        </select>
-      </div> -->
       <div class="mb-3">
         <label for="cdate">Status</label>
         <div class="input-group">
           <input
-            id="cdate"
-            class="form-control"
-            type="number"
+            class="form-check-input"
+            type="checkbox"
+            id="status"
             placeholder="Local Status"
             [(ngModel)]="local.status"
             [ngModelOptions]="{ standalone: true }"
+            [checked]="local.status"
           />
+          <label class="form-check-label" for="status"> Status </label>
         </div>
       </div>
     </form>

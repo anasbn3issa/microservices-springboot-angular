@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class RewardService {
-  readonly FIX_CORS = 'https://infinite-bastion-91954.herokuapp.com/';
-  readonly API_URL = 'http://localhost:8888/rewards';
+  // readonly FIX_CORS = 'https://infinite-bastion-91954.herokuapp.com/';
+  readonly API_URL = 'http://localhost:8085/rewards';
   constructor(private httpClient: HttpClient) {}
 
   // fix cors problem

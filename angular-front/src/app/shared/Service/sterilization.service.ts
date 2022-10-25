@@ -2,18 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SterilizationService {
-  readonly API_URL = 'http://localhost:8888/sterilizations';
+  readonly API_URL = 'http://localhost:8082/sterilizations';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getAllSterilizations() {
     return this.httpClient.get(`${this.API_URL}`);
   }
 
-  editSterilization(sterilization: any, id: any) {    
+  editSterilization(sterilization: any, id: any) {
     return this.httpClient.put(`${this.API_URL}/${id}`, sterilization);
   }
 
