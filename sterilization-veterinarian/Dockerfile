@@ -15,6 +15,8 @@ RUN mvn -q -Dmaven.test.skip -f /home/app/pom.xml clean package
 ENV REDIS_HOST=redis
 ENV REDIS_PORT=6379
 ENV REDIS_PASSWORD=
+ENV petMS.base = http://gateway:8888/pets
+ENV vetoMS.base = http://gateway:8888/veterinarians
 
 #
 # Package stage

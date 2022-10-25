@@ -14,7 +14,7 @@ spring:
           uri: lb://sterilization-service
           order: 1
           predicates:
-            - Path=/sterilizations/**
+            - Path=/sterilizations/**,/veterinarians/**
         - id: vaccination-service
           uri: lb://vaccination-service
           order: 0

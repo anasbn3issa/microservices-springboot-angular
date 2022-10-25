@@ -1,27 +1,41 @@
 package com.esprit.microservice.entities;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
-public class Veterinarian {
+
+@NoArgsConstructor
+@RedisHash("Veterinarian")
+public class Veterinarian implements Serializable{
 	private static final long serialVersionUID = 6;
 
-	private String veterinarian_id;
+	@Id
+	private String id;
 	
-	private String pet_id;
-	private String name, address, phone, email;
-    private Set<String> items;
-	public Veterinarian(String veterinarian_id, String pet_id, String name, String address, String phone, String email,
+	private @NonNull String name;
+	private @NonNull String address;
+	private @NonNull String email;
+	private @NonNull String phone;
+    private Set<String> items = new HashSet<>();
+	public Veterinarian(String veterinarian_id, String name, String address, String phone, String email,
 			Set<String> items) {
 		super();
-		this.veterinarian_id = veterinarian_id;
-		this.pet_id = pet_id;
+		this.id = veterinarian_id;
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
@@ -29,10 +43,9 @@ public class Veterinarian {
 		this.items = items;
 	}
 	
-	public Veterinarian(String pet_id, String name, String address, String phone, String email,
+	public Veterinarian( String name, String address, String phone, String email,
 			Set<String> items) {
 		super();
-		this.pet_id = pet_id;
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
@@ -40,9 +53,8 @@ public class Veterinarian {
 		this.items = items;
 	}
 	
-	public Veterinarian(String pet_id, String name, String address, String phone, String email) {
+	public Veterinarian(String name, String address, String phone, String email) {
 		super();
-		this.pet_id = pet_id;
 		this.name = name;
 		this.address = address;
 		this.phone = phone;

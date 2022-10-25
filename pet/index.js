@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require('cors');
 const dotenv = require("dotenv");
 var path = require("path");
 const colors = require("colors");
@@ -11,6 +12,8 @@ dotenv.config();
 connectDB();
 
 const app = express();
+app.use(cors());
+
 
 const client = new Eureka({
   // application instance information
