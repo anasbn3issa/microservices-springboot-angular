@@ -233,7 +233,9 @@ services:
       vaccination:
         condition: service_healthy
       sterilization:
-          condition: service_healthy
+        condition: service_healthy
+      reward: 
+        condition: service_healthy
 
   pet:
     build: ./pet

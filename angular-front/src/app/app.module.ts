@@ -5,7 +5,11 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductsComponent } from './products/products.component';
 import { FormsModule } from '@angular/forms';
-import { NgbModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbModal,
+  NgbModalModule,
+  NgbModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { StockComponent } from './stock/stock.component';
@@ -14,6 +18,7 @@ import { SecteurActiviteComponent } from './secteur-activite/secteur-activite.co
 import { OperateurComponent } from './operateur/operateur.component';
 import { FactureComponent } from './facture/facture.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LocalComponent } from './local/local.component';
 import { VaccineComponent } from './vaccine/vaccine.component';
 import { TypevaccineComponent } from './typevaccine/typevaccine.component';
 import { SterilizationComponent } from './sterilization/sterilization.component';
@@ -30,14 +35,12 @@ import { RewardComponent } from './reward/reward.component';
     OperateurComponent,
     FactureComponent,
     NavbarComponent,
+    LocalComponent,
     VaccineComponent,
     TypevaccineComponent,
-<<<<<<< HEAD
     SterilizationComponent,
-    VeterinarianComponent
-=======
-    RewardComponent
->>>>>>> 75d8cf2cdc164ac2aabfe82d905e70a816ee1448
+    VeterinarianComponent,
+    RewardComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,9 +49,9 @@ import { RewardComponent } from './reward/reward.component';
     FormsModule,
     NgbModalModule,
     RouterModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
