@@ -2,8 +2,8 @@
 FROM node:latest as node
 WORKDIR /app
 COPY . .
-RUN npm install
-RUN npm run build --prod
+RUN yarn
+RUN yarn run build
 #stage 2
 FROM nginx:alpine
 COPY --from=node /app/dist/angular-front /usr/share/nginx/html
