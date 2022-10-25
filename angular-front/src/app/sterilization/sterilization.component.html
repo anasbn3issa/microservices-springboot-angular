@@ -1,0 +1,234 @@
+<div class="row">
+  <div class="col-md-11" style="margin-left: 20px">
+    <h3 style="margin-top: 20px">List Vaccines</h3>
+    <hr />
+    <button
+      class="btn btn-round btn-sm btn-success"
+      (click)="open(mymodal1, null, null)"
+    >
+      Add new Vaccine
+    </button>
+    <br /><br />
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Pet</th>
+          <th>Veterinarian</th>
+          <th>Date</th>
+          <th>Fee</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of listSterilization; let indexOfelement = index">
+          <td>{{ p.pet.name }}</td>
+          <td>{{ p.veterinarian.name }}</td>
+          <td>{{ p.date }}</td>
+          <td>{{ p.fee }}</td>
+          <td>
+            <button
+              (click)="deleteVaccine(p.id)"
+              class="btn btn-danger"
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="open(mymodal2, p, indexOfelement)"
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<ng-template #mymodal1 let-modal1>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add new Vaccine</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal1.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="mr">Pet</label>
+        <div class="input-group">
+            <select class="form-control" [(ngModel)]="sterilization.petId" [ngModelOptions]="{ standalone: true }">
+                <option *ngFor="let o of pets" [value]="o._id">
+                    {{o.name}}
+                </option>
+            </select>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="val">veterinarian</label>
+        <div class="input-group">
+            <select class="form-control" [(ngModel)]="sterilization.veterinarianId" [ngModelOptions]="{ standalone: true }">
+                <option  [value]="o.id" *ngFor="let o of veterinarians">
+                    {{o.name}}
+                </option>
+            </select>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cdate">Fee</label>
+        <div class="input-group">
+          <input
+            id="cdate"
+            class="form-control"
+            type="number"
+            step="0.1"
+            placeholder="sterilization Fee"
+            [(ngModel)]="sterilization.fee"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cdate">Remarks</label>
+        <div class="input-group">
+          <textarea
+            id="cdate"
+            class="form-control"
+            placeholder="sterilization remarks"
+            [(ngModel)]="sterilization.remarks"
+            [ngModelOptions]="{ standalone: true }"
+          >
+          {{sterilization.remarks}}
+          </textarea>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cdate">Date</label>
+        <div class="input-group">
+          <input
+            id="cdate"
+            class="form-control"
+            type="datetime-local"
+            [(ngModel)]="sterilization.date"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="addVaccine(sterilization)"
+      (click)="modal1.close('Save click')"
+    >
+      Add
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal1.close('Save click')"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #mymodal2 let-modal2>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Sterilization</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal2.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="mr">Pet</label>
+        <div class="input-group">
+          <input
+            id="mr"
+            class="form-control"
+            type="text"
+            placeholder="sterilization Pet"
+            readonly
+            [(ngModel)]="sterilization.pet.name"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="val">Vereterian</label>
+        <div class="input-group">
+          <input
+            id="val"
+            class="form-control"
+            type="text"
+            readonly
+            placeholder="Vereterian"
+            [(ngModel)]="sterilization.veterinarian.name"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <!-- <div class="mb-3">
+        <select [value]="vaccine.validity">
+          <option [value]="true">true</option>
+          <option [value]="false">false</option>
+        </select>
+      </div> -->
+      <div class="mb-3">
+        <label for="cdate">Fee</label>
+        <div class="input-group">
+          <input
+            id="cdate"
+            class="form-control"
+            type="number"
+            step="0.1"
+            placeholder="sterilization Fee"
+            [(ngModel)]="sterilization.fee"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cdate">Remarks</label>
+        <div class="input-group">
+          <textarea
+            id="cdate"
+            class="form-control"
+            placeholder="sterilization remarks"
+            [(ngModel)]="sterilization.remarks"
+            [ngModelOptions]="{ standalone: true }"
+          >
+          {{sterilization.remarks}}
+          </textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="updateVaccine(sterilization)"
+      (click)="modal2.close('Save click')"
+    >
+      Edit
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal2.close('Save click')"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>

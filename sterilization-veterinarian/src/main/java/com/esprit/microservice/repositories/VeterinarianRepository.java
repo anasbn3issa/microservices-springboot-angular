@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.esprit.microservice.entities.Sterilization;
+import com.esprit.microservice.entities.Veterinarian;
 
-public interface SterilizationRepository extends CrudRepository<Sterilization,String> {
+public interface VeterinarianRepository extends CrudRepository<Veterinarian,String> {
 
 
 }

@@ -8,6 +8,8 @@ import { OperateurComponent } from './operateur/operateur.component';
 import { FactureComponent } from './facture/facture.component';
 import { VaccineComponent } from './vaccine/vaccine.component';
 import { TypevaccineComponent } from './typevaccine/typevaccine.component';
+import { SterilizationComponent } from './sterilization/sterilization.component';
+import { VeterinarianComponent } from './veterinarian/veterinarian.component';
 import { RewardComponent } from './reward/reward.component';
 
 const routes: Routes = [
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'reglement', component: ReglementComponent },
   { path: 'vaccine', component: VaccineComponent },
   { path: 'typevaccine', component: TypevaccineComponent },
+  { path: 'sterilization', component: SterilizationComponent },
+  { path: 'veterinarian', component: VeterinarianComponent },
   { path: 'reward', component: RewardComponent },
   { path: '', redirectTo: 'product', pathMatch: 'full' },
 ];

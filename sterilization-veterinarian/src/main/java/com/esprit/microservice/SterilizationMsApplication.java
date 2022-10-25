@@ -9,7 +9,9 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 
 import com.esprit.microservice.entities.Sterilization;
+import com.esprit.microservice.entities.Veterinarian;
 import com.esprit.microservice.repositories.SterilizationRepository;
+import com.esprit.microservice.repositories.VeterinarianRepository;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -19,12 +21,12 @@ public class SterilizationMsApplication {
 		SpringApplication.run(SterilizationMsApplication.class, args);
 	}
 	
+	
 	@Bean
-	ApplicationRunner init (SterilizationRepository repository) {
+	ApplicationRunner init (VeterinarianRepository repository) {
 		return args -> {
-			repository.save(new Sterilization(new Date(), "remarks1", 11.2 , "veto")) ;
-			repository.save(new Sterilization(new Date(), "remarks2", 11.2 , "veto")) ;
-			repository.save(new Sterilization(new Date(), "remarks3", 11.2 , "veto")) ;
+			repository.save(new Veterinarian("name", "address", "123456", "email")) ;
+
 
 		};
 	}
