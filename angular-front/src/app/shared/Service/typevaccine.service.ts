@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class TypeVaccineService {
-  readonly API_URL = 'http://localhost:8091/vaccineTypes';
+  readonly API_URL = 'http://localhost:8888/vaccineTypes';
   constructor(private httpClient: HttpClient) {}
 
   getAllTVaccines() {
