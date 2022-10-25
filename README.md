@@ -63,11 +63,17 @@ Angular application in which we can communicate with the backend using the gatew
   - PUT /veterinarians/:id
   - DELETE /veterinarians/:id
 7. VACCINATION-SERVICE (Spring)
-  - GET /vaccinations
-  - GET /vaccinations/:id
-  - POST /vaccinations
-  - PUT /vaccinations/:id
-  - DELETE /vaccinations/:id
+  - GET /vaccines
+  - GET /vaccines/:id
+  - POST /vaccines
+  - PUT /vaccines/:id
+  - DELETE /vaccines/:id
+  - GET /vaccines/count/:idTypeVaccine
+  - GET /vaccineTypes
+  - GET /vaccineTypes/:id
+  - POST /vaccineTypes
+  - PUT /vaccineTypes/:id
+  - DELETE /vaccineTypes/:id
 
 ### Database
 1. MongoDB

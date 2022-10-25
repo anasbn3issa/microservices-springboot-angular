@@ -21,6 +21,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LocalComponent } from './local/local.component';
 import { VaccineComponent } from './vaccine/vaccine.component';
 import { TypevaccineComponent } from './typevaccine/typevaccine.component';
+import { RewardComponent } from './reward/reward.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TypevaccineComponent } from './typevaccine/typevaccine.component';
     LocalComponent,
     VaccineComponent,
     TypevaccineComponent,
+    RewardComponent,
   ],
   imports: [
     BrowserModule,
